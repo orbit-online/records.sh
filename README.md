@@ -124,9 +124,10 @@ The possible logging levels are (in that severity order):
 | `warning` |
 | `info`    |
 | `verbose` |
+| `debug`   |
 
 For example: Setting the `$LOGLEVEL` to `warning` causes all lower severity
-levels (`debug`, `verbose`, `info`) to not be logged.
+levels (`info`, `verbose`, `debug`) to not be logged.
 
 You can silence all logging by setting `$LOGLEVEL` to `silent`.  
 Note that there is no `silent()` log function.
