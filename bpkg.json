@@ -1,0 +1,6 @@
+{
+  "name": "records.sh",
+  "version": "0.9.0",
+  "description": "A small logging library for bash. Supports `cli`, `json`, `logfmt`, and custom formats. Integrates with journald and Github actions.",
+  "scripts": ["records.sh"]
+}
