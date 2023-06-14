@@ -120,7 +120,6 @@ The possible logging levels are (in that severity order):
 |           |
 | --------- |
 | `error`   |
-| `info`    |
 | `warning` |
 | `info`    |
 | `verbose` |
@@ -190,12 +189,11 @@ Log levels are mapped to journald severities like this:
 
 | records.sh | Syslog    |
 | ---------- | --------- |
-| `debug`    | `debug`   |
-| `verbose`  | `debug`   |
-| `info`     | `info`    |
+| `error`    | `error`   |
 | `warning`  | `warning` |
 | `info`     | `info`    |
-| `error`    | `error`   |
+| `verbose`  | `debug`   |
+| `debug`    | `debug`   |
 
 ## Github actions
 
