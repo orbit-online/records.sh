@@ -201,15 +201,18 @@ Github actions support a [`::debug::` log message prefix](https://docs.github.co
 which hides log messages [unless debug logging is enabled](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging).
 
 When `$GITHUB_ACTIONS=true` (which Github automatically sets for all workflows),
-records.sh prefixes all log messages below the current log level with `::debug::`.
-This is independent of the actual log format, which can be set to whatever you like.
+records.sh prefixes all log messages below the current log level with
+`::debug::`. This is independent of the actual log format, which can be set to
+whatever you like.
 
-To explicitly disable this behavior set `$LOG_GITHUB_ACTIONS=false`.
+To explicitly disable this behavior set `$LOG_GITHUB_ACTIONS=false` (setting it
+to `true` will explicitly enable it).
 
 ### Log groups
 
 Github actions support grouping log messages with `::group::NAME`. To start and
-end such groups use `log_begin_grp NAME` and `log_end_grp`.
+end such groups use `log_begin_grp NAME` and `log_end_grp`. The groups are only
+output when `$GITHUB_ACTIONS=true` (`$LOG_GITHUB_ACTIONS` also works here).
 
 ## Changing preferences
 
