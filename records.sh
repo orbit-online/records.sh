@@ -90,7 +90,7 @@ _records_journal() {
 }
 
 _records_github_actions() {
-  local level=$1
+  local level=$1 output_fn
   if [[ -z $format ]]; then
     output_fn=_records_output_${_records_fallback_logformat//-/_}
   else
