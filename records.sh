@@ -9,7 +9,7 @@ _records() {
         shift;    shift;   shift;     shift
   # shellcheck disable=SC2059
   message=$(printf -- "${tpl}" "$@")
-  if ${GITHUB_ACTIONS:-false} && ${LOG_GITHUB_ACTIONS:-true}; then
+  if ${LOG_GITHUB_ACTIONS:-${GITHUB_ACTIONS:-false}}; then
     output_fn=_records_github_actions
   elif [[ -z $format ]]; then
     output_fn=_records_output_${_records_fallback_logformat//-/_}
@@ -25,7 +25,7 @@ _records() {
 _records_tee() {
   local format=$1 level=$2 program=$3 message output_fn
         shift;    shift;   shift
-  if ${GITHUB_ACTIONS:-false} && ${LOG_GITHUB_ACTIONS:-true}; then
+  if ${LOG_GITHUB_ACTIONS:-${GITHUB_ACTIONS:-false}}; then
     output_fn=_records_github_actions
   elif [[ -z $format ]]; then
     output_fn=_records_output_${_records_fallback_logformat//-/_}
