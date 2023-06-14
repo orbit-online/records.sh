@@ -103,7 +103,7 @@ _records_github_actions() {
 }
 
 log_begin_grp() {
-  if ${GITHUB_ACTIONS:-false}; then
+  if ${LOG_GITHUB_ACTIONS:-${GITHUB_ACTIONS:-false}}; then
     local executable=$1
     shift
     printf -- "::group::%s %s\n" "${executable#"$ORBIT_PATH/"}" "$*" >&2
@@ -112,7 +112,7 @@ log_begin_grp() {
 }
 
 log_end_grp() {
-  if ${GITHUB_ACTIONS:-false}; then
+  if ${LOG_GITHUB_ACTIONS:-${GITHUB_ACTIONS:-false}}; then
     printf -- "::endgroup::\n" >&2
   fi
   return 0

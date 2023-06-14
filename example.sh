@@ -28,7 +28,9 @@ log_all_levels
 var=0x1f
 info "The decimal version of %s is %d" "$var" "$var"
 
+log_begin_grp 'A "printf | tee" demonstration'
 printf 'teeing\nlines\nworks\nlike this' | LOGPROGRAM=printf tee_verbose
+log_end_grp
 
 LOGFORMAT=json
 log_all_levels
