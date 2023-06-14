@@ -28,6 +28,8 @@ log_all_levels
 var=0x1f
 info "The decimal version of %s is %d" "$var" "$var"
 
+printf 'teeing\nlines\nworks\nlike this' | LOGPROGRAM=printf tee_verbose
+
 LOGFORMAT=json
 log_all_levels
 

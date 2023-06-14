@@ -33,7 +33,7 @@ _records_tee() {
     output_fn=_records_output_${format//-/_}
   fi
   local message
-  while IFS= read -r -d $'\n' message; do
+  while IFS= read -r -d $'\n' message || [[ -n $message ]]; do
     "$output_fn" "$level" "$program" "$message"
     if ${LOG_TO_JOURNALD:-false}; then
       _records_journal "$level" "$program" "$message"
