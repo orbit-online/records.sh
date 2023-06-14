@@ -167,7 +167,7 @@ straightforward:
 
 ```
 tar -xvf file.tar | tee_verbose
-some-command --errors-only | tee_error
+some-command --errors-only | LOGPROGRAM=some-command tee_error
 ```
 
 It is not possible to change the loglevel mid-stream.
