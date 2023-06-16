@@ -170,6 +170,12 @@ tar -xvf file.tar | tee_verbose
 some-command --errors-only | LOGPROGRAM=some-command tee_error
 ```
 
+If you want to tee stderr instead of stdout you can use redirects:
+
+```
+output=$(command-that-logs-to-stderr 2> >(LOGPROGRAM=command-that-logs-to-stderr tee_warning))
+```
+
 It is not possible to change the loglevel mid-stream.
 
 ## journald integration
