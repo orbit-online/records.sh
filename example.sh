@@ -2,7 +2,6 @@
 
 set -eo pipefail
 PKGROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")"; echo "$PWD")
-# shellcheck source=records.sh
 source "$PKGROOT/records.sh"
 
 log_all_levels() {
