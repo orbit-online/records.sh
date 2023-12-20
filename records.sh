@@ -139,7 +139,7 @@ _records_output_json() {
   local level=$1 program=$2 message=$3
   _records_level_ge "$level" "${LOGLEVEL:-$_records_fallback_loglevel}" || return 0
   jq -cM \
-    --arg timestamp "$(date --iso-8601=seconds)" --arg level "$level" \
+    --arg timestamp "$(date -Iseconds)" --arg level "$level" \
     --arg program "${program:-$_records_fallback_program}" --arg message "$message" \
     '.timestamp=$timestamp | .level=$level | .program=$program | .message=$message' <<<'{}'
 }
@@ -151,7 +151,7 @@ _records_output_logfmt() {
     message=$(jq -cM --arg msg "$message" '. = $msg' <<<'""')
   fi
   printf -- 'timestamp=%s level=%s program=%s message=%s\n' \
-    "$(date --iso-8601=seconds)" "$level" "${program:-$_records_fallback_program}" "$message"
+    "$(date -Iseconds)" "$level" "${program:-$_records_fallback_program}" "$message"
 }
 
 # Output a stacktrace (https://stackoverflow.com/a/62757929/339505)
