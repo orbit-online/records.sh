@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
-PKGROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")"; echo "$PWD")
+set -eo pipefail; shopt -s inherit_errexit
+PKGROOT=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 source "$PKGROOT/records.sh"
 
 log_all_levels() {
