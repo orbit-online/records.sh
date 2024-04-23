@@ -6,6 +6,7 @@ Integrates with journald and Github actions.
 
 ## Contents
 
+- [Installation](#installation)
 - [Usage](#usage)
 - [Dependencies](#dependencies)
 - [Environment variables](#environment-variables)
@@ -23,6 +24,10 @@ Integrates with journald and Github actions.
   - [Log groups](#log-groups)
 - [Changing preferences](#changing-preferences)
 - [Naming clashes](#naming-clashes)
+
+## Installation
+
+See [the latest release](https://github.com/orbit-online/records.sh/releases/latest) for instructions.
 
 ## Usage
 

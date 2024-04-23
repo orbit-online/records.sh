@@ -28,6 +28,7 @@ var=0x1f
 info "The decimal version of %s is %d" "$var" "$var"
 
 log_begin_grp 'A "printf | tee" demonstration'
+# shellcheck disable=SC2209
 printf 'teeing\nlines\nworks\nlike this' | LOGPROGRAM=printf tee_verbose
 log_end_grp
 
