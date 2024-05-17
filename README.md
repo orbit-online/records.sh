@@ -16,7 +16,7 @@ Integrates with journald and Github actions.
   - [`logfmt`](#logfmt)
   - [Custom format](#custom-format)
 - [Levels](#levels)
-- [Tee'ing](#teeing)
+- [Piping](#piping)
 - [journald integration](#journald-integration)
 - [Exiting with an error](#exiting-with-an-error)
   - [Stacktraces](#stacktraces)
@@ -163,22 +163,22 @@ example.sh: Woops
     in main: log_all_levels (./example.sh:27)
 ```
 
-## Tee'ing
+## Piping
 
 When running other commands in bash it can be useful to hide their output during
 normal operations but show it during debugging. You can do this with the
-`tee_*()` functions (one for each loglevel). Their usage is rather
+`pipe_*()` functions (one for each loglevel). Their usage is rather
 straightforward:
 
 ```
-tar -xvf file.tar | tee_verbose
-some-command --errors-only | LOGPROGRAM=some-command tee_error
+tar -xvf file.tar | pipe_verbose
+some-command --errors-only | LOGPROGRAM=some-command pipe_error
 ```
 
-If you want to tee stderr instead of stdout you can use redirects:
+If you want to pipe stderr instead of stdout you can use redirects:
 
 ```
-output=$(command-that-logs-to-stderr 2> >(LOGPROGRAM=command-that-logs-to-stderr tee_warning))
+output=$(command-that-logs-to-stderr 2> >(LOGPROGRAM=command-that-logs-to-stderr pipe_warning))
 ```
 
 It is not possible to change the loglevel mid-stream.
@@ -191,7 +191,7 @@ journald by running `log_forward_to_journald true` (`false` to disable again).
 Regardless of the log level, all logs down to the `verbose` severity will be
 forwarded. `debug` severity will be logged as well when `$LOGLEVEL=debug`.
 
-Both normal log messages and `tee_*`'d log messages are forwarded.  
+Both normal log messages and `pipe_*`'d log messages are forwarded.  
 For timestamping `records.sh` relies on journald itself.  
 `$LOGPROGRAM` is used to set the syslog identifier, meaning the logs can be retrieved with
 `journalctl SYSLOG_IDENTIFIER=example.sh` (this is also logged verbosely when

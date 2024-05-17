@@ -22,7 +22,7 @@ _records() {
   fi
 }
 
-_records_tee() {
+_records_pipe() {
   local format=$1 level=$2 program=$3 message output_fn
         shift;    shift;   shift
   if ${LOG_GITHUB_ACTIONS:-${GITHUB_ACTIONS:-false}}; then
@@ -195,11 +195,17 @@ verbose() { _records "$LOGFORMAT" verbose "$LOGPROGRAM" "$@" >&2; }
 info() { _records "$LOGFORMAT" info "$LOGPROGRAM" "$@" >&2; }
 warning() { _records "$LOGFORMAT" warning "$LOGPROGRAM" "$@" >&2; }
 error() { _records "$LOGFORMAT" error "$LOGPROGRAM" "$@" >&2; }
-tee_debug() { _records_tee "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
-tee_verbose() { _records_tee "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
-tee_info() { _records_tee "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
-tee_warning() { _records_tee "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
-tee_error() { _records_tee "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
+pipe_debug() { _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
+pipe_verbose() { _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
+pipe_info() { _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
+pipe_warning() { _records_pipe "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
+pipe_error() { _records_pipe "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
+_records_warn_tee() { warning "tee_* functions are deprecated. Use pipe_* instead."; }
+tee_debug() { _records_warn_tee; _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
+tee_verbose() { _records_warn_tee; _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
+tee_info() { _records_warn_tee; _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
+tee_warning() { _records_warn_tee; _records_pipe "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
+tee_error() { _records_warn_tee; _records_pipe "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
 
 fatal() {
   local exit_code=1
