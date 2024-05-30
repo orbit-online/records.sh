@@ -200,7 +200,7 @@ pipe_verbose() { _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
 pipe_info() { _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
 pipe_warning() { _records_pipe "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
 pipe_error() { _records_pipe "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
-_records_warn_tee() { warning "tee_* functions are deprecated. Use pipe_* instead."; }
+_records_warn_tee() { warning "records.sh: tee_* functions are deprecated. Use pipe_* instead."; }
 tee_debug() { _records_warn_tee; _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
 tee_verbose() { _records_warn_tee; _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
 tee_info() { _records_warn_tee; _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
