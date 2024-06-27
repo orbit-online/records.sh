@@ -20,6 +20,10 @@ _records() {
   if ${LOG_TO_JOURNALD:-false}; then
     _records_journal "$level" "$program" "$message"
   fi
+  if [[ $_RECORDS_ORIG_OPTS = *x* ]]; then
+    unset _RECORDS_ORIG_OPTS
+    set -x
+  fi
 }
 
 _records_pipe() {
@@ -39,6 +43,10 @@ _records_pipe() {
       _records_journal "$level" "$program" "$message"
     fi
   done
+  if [[ $_RECORDS_ORIG_OPTS = *x* ]]; then
+    unset _RECORDS_ORIG_OPTS
+    set -x
+  fi
 }
 
 # Returns 0 if left>=right, 1 if left<right
@@ -190,16 +198,16 @@ log_check_settings() {
   esac
 }
 
-debug() { _records "$LOGFORMAT" debug "$LOGPROGRAM" "$@" >&2; }
-verbose() { _records "$LOGFORMAT" verbose "$LOGPROGRAM" "$@" >&2; }
-info() { _records "$LOGFORMAT" info "$LOGPROGRAM" "$@" >&2; }
-warning() { _records "$LOGFORMAT" warning "$LOGPROGRAM" "$@" >&2; }
-error() { _records "$LOGFORMAT" error "$LOGPROGRAM" "$@" >&2; }
-pipe_debug() { _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
-pipe_verbose() { _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
-pipe_info() { _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
-pipe_warning() { _records_pipe "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
-pipe_error() { _records_pipe "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
+debug() { _RECORDS_ORIG_OPTS=$-; set +x; _records "$LOGFORMAT" debug "$LOGPROGRAM" "$@" >&2; }
+verbose() { _RECORDS_ORIG_OPTS=$-; set +x; _records "$LOGFORMAT" verbose "$LOGPROGRAM" "$@" >&2; }
+info() { _RECORDS_ORIG_OPTS=$-; set +x; _records "$LOGFORMAT" info "$LOGPROGRAM" "$@" >&2; }
+warning() { _RECORDS_ORIG_OPTS=$-; set +x; _records "$LOGFORMAT" warning "$LOGPROGRAM" "$@" >&2; }
+error() { _RECORDS_ORIG_OPTS=$-; set +x; _records "$LOGFORMAT" error "$LOGPROGRAM" "$@" >&2; }
+pipe_debug() { _RECORDS_ORIG_OPTS=$-; set +x; _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
+pipe_verbose() { _RECORDS_ORIG_OPTS=$-; set +x; _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
+pipe_info() { _RECORDS_ORIG_OPTS=$-; set +x; _records_pipe "$LOGFORMAT" info "$LOGPROGRAM" >&2; }
+pipe_warning() { _RECORDS_ORIG_OPTS=$-; set +x; _records_pipe "$LOGFORMAT" warning "$LOGPROGRAM" >&2; }
+pipe_error() { _RECORDS_ORIG_OPTS=$-; set +x; _records_pipe "$LOGFORMAT" error "$LOGPROGRAM" >&2; }
 _records_warn_tee() { warning "records.sh: tee_* functions are deprecated. Use pipe_* instead."; }
 tee_debug() { _records_warn_tee; _records_pipe "$LOGFORMAT" debug "$LOGPROGRAM" >&2; }
 tee_verbose() { _records_warn_tee; _records_pipe "$LOGFORMAT" verbose "$LOGPROGRAM" >&2; }
