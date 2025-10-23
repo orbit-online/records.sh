@@ -65,11 +65,11 @@ _records_level_ge() {
 
 log_forward_to_journald() {
   if ! type systemd-cat >/dev/null 2>&1; then
-    LOGPROGRAM=log.sh warning 'systemd-cat not available, cannot forward logs to journald'
+    LOGPROGRAM=records.sh warning 'systemd-cat not available, cannot forward logs to journald'
     return 0
   fi
   if [[ $1 != true && $1 != false ]]; then
-    LOGPROGRAM=log.sh fatal_stacktrace "log_forward_to_journald() only accepts true or false as the first argument"
+    LOGPROGRAM=records.sh fatal_stacktrace "log_forward_to_journald() only accepts true or false as the first argument"
   elif [[ $LOG_TO_JOURNALD != true && $1 = true ]]; then
     # shellcheck disable=2097,2098
     verbose "Forwarding logs to journald, retrieve them with \`journalctl SYSLOG_IDENTIFIER=%s'" \
