@@ -182,7 +182,7 @@ log_check_settings() {
   case ${LOGFORMAT:-$_records_fallback_logformat} in
     json|logfmt)
       if ! type jq >/dev/null 2>&1; then
-        _log cli warning log.sh "logs.sh: jq not found. Falling back to '%s'." "$_records_fallback_logformat"
+        LOGFORMAT=cli warning "records.sh: jq not found. Falling back to '%s'." "$_records_fallback_logformat"
         unset LOGFORMAT
       fi
       ;;
