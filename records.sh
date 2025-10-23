@@ -72,11 +72,11 @@ log_forward_to_journald() {
     LOGPROGRAM=records.sh fatal_stacktrace "log_forward_to_journald() only accepts true or false as the first argument"
   elif [[ $LOG_TO_JOURNALD != true && $1 = true ]]; then
     # shellcheck disable=2097,2098
-    verbose "Forwarding logs to journald, retrieve them with \`journalctl SYSLOG_IDENTIFIER=%s'" \
+    LOGPROGRAM=records.sh verbose "Forwarding logs to journald, retrieve them with \`journalctl SYSLOG_IDENTIFIER=%s'" \
       "${LOGPROGRAM:-$_records_fallback_program}"
   elif [[ $LOG_TO_JOURNALD = true && $1 = false ]]; then
     # shellcheck disable=2097,2098
-    verbose "No longer forwarding logs to journald"
+    LOGPROGRAM=records.sh verbose "No longer forwarding logs to journald"
   fi
   export LOG_TO_JOURNALD=${1:?}
 }
@@ -177,22 +177,22 @@ _records_get_stacktrace() {
 log_check_settings() {
   case ${LOGLEVEL:-$_records_fallback_loglevel} in
     debug) ;; verbose) ;; info) ;; warning) ;; error) ;; silent) ;;
-    *) fatal_stacktrace "Unknown \$LOGLEVEL: \`%s'" "$LOGLEVEL" ;;
+    *) LOGPROGRAM=records.sh fatal_stacktrace "Unknown \$LOGLEVEL: \`%s'" "$LOGLEVEL" ;;
   esac
   case ${LOGFORMAT:-$_records_fallback_logformat} in
     json|logfmt)
       if ! type jq >/dev/null 2>&1; then
-        LOGFORMAT=cli warning "records.sh: jq not found. Falling back to '%s'." "$_records_fallback_logformat"
+        LOGPROGRAM=records.sh LOGFORMAT=cli warning "records.sh: jq not found. Falling back to '%s'." "$_records_fallback_logformat"
         unset LOGFORMAT
       fi
       ;;
     github-actions|github_actions)
-      LOGFORMAT=cli fatal_stacktrace "'github-actions' is not a \$LOGFORMAT. It can only be enabled with GITHUB_ACTIONS=true"
+      LOGPROGRAM=records.sh LOGFORMAT=cli fatal_stacktrace "'github-actions' is not a \$LOGFORMAT. It can only be enabled with GITHUB_ACTIONS=true"
       ;;
     *)
       if ! type "_records_output_${LOGFORMAT:-$_records_fallback_logformat}" >/dev/null 2>&1; then
         # shellcheck disable=2097,2098
-        LOGFORMAT=cli fatal_stacktrace "Unknown \$LOGFORMAT: \`%s'" "$LOGFORMAT"
+        LOGPROGRAM=records.sh LOGFORMAT=cli fatal_stacktrace "Unknown \$LOGFORMAT: \`%s'" "$LOGFORMAT"
       fi
       ;;
   esac
